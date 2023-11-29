@@ -3,7 +3,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
 import { v4 as uuidv4 } from "uuid";
-import { range } from './utils';
+import { range } from './utils'
 import './index.css';
 
 import vertexShader from './vertexShader';
@@ -19,7 +19,7 @@ const Geometries = () => {
 
   const uniforms = useMemo(() => ({
     uTexture: {
-      value: null
+      value: null,
     },
     winResolution: {
       value: new THREE.Vector2(
@@ -31,17 +31,13 @@ const Geometries = () => {
 
   useFrame((state) => {
     const { gl, scene, camera } = state;
-    // Hide the mesh
     mesh.current.visible = false;
     gl.setRenderTarget(mainRenderTarget);
-    // Render into the FBO
     gl.render(scene, camera);
 
-    // Pass the texture data to our shader material
     mesh.current.material.uniforms.uTexture.value = mainRenderTarget.texture;
 
     gl.setRenderTarget(null);
-    // Show the mesh
     mesh.current.visible = true;
   });
 
@@ -50,7 +46,7 @@ const Geometries = () => {
 
   return (
     <>
-      <color attach="background" args={["black"]} />
+      <color attach="background" args={["grey"]} />
       <group ref={backgroundGroup}>
         {columns.map((col, i) =>
           rows.map((row, j) => (
@@ -77,7 +73,7 @@ const Geometries = () => {
 const Scene = () => {
   return (
     <Canvas camera={{ position: [0, 0, 6] }} dpr={[1, 2]}>
-      <ambientLight intensity={1.0} />
+      <ambientLight intensity={1.4} />
       <Geometries />
       <OrbitControls />
     </Canvas>
@@ -86,3 +82,4 @@ const Scene = () => {
 
 
 export default Scene;
+
