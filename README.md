@@ -1,3 +1,3 @@
-# React Three Fiber + Vite
+# R3F Refraction
 
-Easy Template for React Three Fiber
+Refraction with React Three Fiber
