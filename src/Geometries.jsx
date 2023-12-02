@@ -10,7 +10,7 @@ import './index.css';
 import vertexShader from './vertexShader';
 import fragmentShader from './fragmentShader';
 
-function Geometries()
+export default function Geometries()
 {
   // This reference gives us direct access to our mesh
   const mesh = useRef();

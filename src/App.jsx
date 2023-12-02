@@ -1,12 +1,9 @@
 import { OrbitControls, useFBO } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Leva, folder, useControls } from "leva";
-import { useMemo, useRef } from "react";
-import * as THREE from "three";
-import { v4 as uuidv4 } from "uuid";
 import { range } from './utils';
 import './index.css';
-import { Geometries } from './Geometries.jsx'
+import Geometries from './Geometries.jsx'
 
 import vertexShader from './vertexShader';
 import fragmentShader from './fragmentShader';
