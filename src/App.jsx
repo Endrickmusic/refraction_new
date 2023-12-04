@@ -4,7 +4,7 @@ import { Leva, folder, useControls } from "leva";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
 import { v4 as uuidv4 } from "uuid";
-import './scene.css';
+import './index.css';
 
 import vertexShader from './vertexShader';
 import fragmentShader from './fragmentShader';
