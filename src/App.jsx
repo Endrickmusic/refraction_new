@@ -1,8 +1,10 @@
 import { OrbitControls, useFBO, Float } from "@react-three/drei";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { Leva, folder, useControls } from "leva";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
+import { TextureLoader } from '/node_modules/three/src/loaders/TextureLoader'
+
 import { v4 as uuidv4 } from "uuid";
 import './index.css';
 
@@ -10,6 +12,8 @@ import vertexShader from './vertexShader';
 import fragmentShader from './fragmentShader';
 
 const Geometries = () => {
+
+  const normalMap = useLoader(TextureLoader, 'public/scratches_normal.jpg')
   // This reference gives us direct access to our mesh
   const mesh = useRef();
   const backgroundGroup = useRef();
@@ -70,6 +74,9 @@ const Geometries = () => {
   })
 
   const uniforms = useMemo(() => ({
+    uTime: {
+      value: 0.0,
+    },
     uTexture: {
       value: null,
     },
@@ -100,7 +107,7 @@ const Geometries = () => {
     },
   }), [])
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     const { gl, scene, camera } = state;
     mesh.current.visible = false;
 
@@ -139,37 +146,45 @@ const Geometries = () => {
     mesh.current.material.side = THREE.FrontSide;
 
     gl.setRenderTarget(null);
+    mesh.current.material.uniforms.uTime.value += delta / 3.
     
   });
 
   return (
     <>
-      <color attach="background" args={["black"]} />
-      <group ref={backgroundGroup} visible={false}>
-        <mesh position={[-4, -3, -4]}>
+      <color 
+      attach="background" 
+      args={["black"]} />
+      <group ref={backgroundGroup} 
+      visible={true}>
+        <mesh position={[-3, -3, -3]}>
           <icosahedronGeometry args={[2, 16]} />
           <meshBasicMaterial color="white" />
         </mesh>
-        <mesh position={[4, -3, -4]}>
+        <mesh position={[3, -3, -3]}>
           <icosahedronGeometry args={[2, 16]} />
           <meshBasicMaterial color="white" />
         </mesh>
-        <mesh position={[-5, 3, -4]}>
+        <mesh position={[-3, 3, -3]}>
           <icosahedronGeometry args={[2, 16]} />
           <meshBasicMaterial color="white" />
         </mesh>
-        <mesh position={[5, 3, -4]}>
+        <mesh position={[3, 3, -3]}>
           <icosahedronGeometry args={[2, 16]} />
           <meshBasicMaterial color="white" />
         </mesh>
       </group>
-      <mesh ref={mesh}>
-        <torusGeometry args={[3, 1, 32, 100]} />
+      <mesh ref={mesh}
+        position= {[0,0,2]}
+      >
+        {/* <torusGeometry args={[3, 1, 32, 100]} /> */}
+        <icosahedronGeometry args={[2, 16]} />
         <shaderMaterial
           key={uuidv4()}
           vertexShader={vertexShader}
           fragmentShader={fragmentShader}
           uniforms={uniforms}
+          normalMap={normalMap}
         />
       </mesh>
     </>
@@ -177,6 +192,9 @@ const Geometries = () => {
 };
 
 const Scene = () => {
+
+
+
   return (
     <>
       <Leva collapsed />

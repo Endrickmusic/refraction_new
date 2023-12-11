@@ -1,4 +1,6 @@
 const vertexShader = `
+uniform float uTime;
+
 varying vec3 worldNormal;
 varying vec3 eyeVector;
 
