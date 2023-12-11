@@ -1,4 +1,4 @@
-import { OrbitControls, useFBO, Float } from "@react-three/drei";
+import { OrbitControls, useFBO, Environment } from "@react-three/drei";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { Leva, folder, useControls } from "leva";
 import { useMemo, useRef } from "react";
@@ -152,9 +152,10 @@ const Geometries = () => {
 
   return (
     <>
-      <color 
+      {/* <color 
       attach="background" 
-      args={["black"]} />
+      args={["red"]} /> */}
+      <Environment files="./img/2k.hdr" background />
       <group ref={backgroundGroup} 
       visible={true}>
         <mesh position={[-3, -3, -3]}>
